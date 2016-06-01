@@ -1,6 +1,13 @@
 import {List, Map} from 'immutable';
 
 /**
+ * Initial tree state
+ * Use as default value
+ * @type {[type]}
+ */
+export const INITIAL_STATE = Map()
+
+/**
  * Set an entries key in the state Map and
  * set the value as the given List of entries
  *

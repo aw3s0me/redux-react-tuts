@@ -1,4 +1,4 @@
-import {setEntries, next, vote} from './core';
+import {setEntries, next, vote, INITIAL_STATE} from './core';
 
 /**
  * Delegate to function based on action type
@@ -7,7 +7,7 @@ import {setEntries, next, vote} from './core';
  * @param  {[type]} action [description]
  * @return {[type]}        [description]
  */
-export default function reducer(state, action) {
+export default function reducer(state = INITIAL_STATE, action) {
     // Figure out which function to call and call it
     switch(action.type) {
         case 'SET_ENTIRES':
@@ -17,5 +17,6 @@ export default function reducer(state, action) {
         case 'VOTE':
             return vote(state, action.entry)
     }
+    //if called with undefined state, returns empty Map
     return state
 }
