@@ -7,6 +7,7 @@ import {
     Simulate
 } from 'react-addons-test-utils';
 import {expect} from 'chai';
+import {List} from 'immutable';
 
 describe('Voting', () => {
     it('renders a pair of buttons', () => {
@@ -100,4 +101,83 @@ describe('Voting', () => {
         expect(winner).to.be.ok
         expect(winner.textContent).to.contain('Trainspotting')
     })
+
+    /**
+     * Just to show why to use immutable structures
+     * And pure components
+     * @param  {[type]} 'renders as            a pure component' [description]
+     * @param  {[type]} (        [description]
+     * @return {[type]}          [description]
+     */
+    it('renders as a pure component', () => {
+        //Mutable structure - array
+        const pair = ['Trainspotting', '28 Days Later'];
+        //instead of using renderIntoDocument,
+        //we manually construct a parent div
+        //and rerender into it twice => able to simulate rerendering
+        const container = document.createElement('div');
+        let component = ReactDOM.render(
+            <Voting pair={pair} />,
+            container
+        );
+
+        /**
+         * Get button
+         * @type {[type]}
+         */
+        let firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
+        expect(firstButton.textContent).to.equal('Trainspotting');
+        //cause MUTATION of array after rendering
+        //IT MUST NOT BE RE-RENDERED. However it is re-rendered
+        //=> So we NEED TO USE MIXINS!
+        pair[0] = 'Sunshine';
+        component = ReactDOM.render(
+            <Voting pair={pair} />,
+            container
+        );
+        /**
+         * Get button
+         * @type {[type]}
+         */
+        firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
+        expect(firstButton.textContent).to.equal('Trainspotting');
+    })
+
+    /**
+     * But if we use real immutable list =>
+     * It will be re-rendered!
+     * @param  {[type]} 'does update        DOM when prop changes' [description]
+     * @param  {[type]} (     [description]
+     * @return {[type]}       [description]
+     */
+    it('does update DOM when prop changes', () => {
+        const pair = List.of('Trainspotting', '28 Days Later');
+        const container = document.createElement('div');
+        let component = ReactDOM.render(
+            <Voting pair={pair} />,
+            container
+        );
+
+        /**
+         *
+         * @type {[type]}
+         */
+        let firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
+        expect(firstButton.textContent).to.equal('Trainspotting');
+
+        const newPair = pair.set(0, 'Sunshine');
+        //Will be rerendered. Because it does deep compare
+        //Want to AVOID IT => Use MIXINS!
+        component = ReactDOM.render(
+            <Voting pair={newPair} />,
+            container
+        );
+
+        /**
+         *
+         * @type {[type]}
+         */
+        firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
+        expect(firstButton.textContent).to.equal('Sunshine');
+      });
 })
