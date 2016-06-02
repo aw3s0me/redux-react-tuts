@@ -1,4 +1,5 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 /**
  * Separated logic for winner (separate component)
@@ -6,6 +7,7 @@ import React from 'react';
  * @return {[type]}   [description]
  */
 export default React.createClass({
+    mixins: [PureRenderMixin],
     render: function() {
         return <div ref="winner">Winner is {this.props.winner}!</div>
     }
