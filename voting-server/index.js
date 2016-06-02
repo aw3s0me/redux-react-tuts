@@ -17,3 +17,17 @@ export const store = makeStore()
  * for redux subscription
  */
 startServer(store)
+
+/**
+ * Load entries and set them in state tree
+ * @type {String}
+ */
+store.dispatch({
+    type: 'SET_ENTIRES',
+    entries: require('./entries.json')
+})
+/**
+ * Distribute state tree by dispatching next action
+ * @type {String}
+ */
+store.dispatch({type: 'NEXT'})

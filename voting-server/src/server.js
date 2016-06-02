@@ -19,5 +19,9 @@ export default function startServer(store) {
     //When new connection occurs, client receives current state
     io.on('connection', (socket) => {
         socket.emit('state', store.getState().toJS())
+        //able to receive updates from them.
+        //When update. Clients emit action events
+        //that feed into Redux store. and moves to next state
+        socket.on('action', store.dispatch.bind(store))
     })
 }
