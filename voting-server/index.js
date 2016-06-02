@@ -5,9 +5,14 @@
  */
 
 import makeStore from './src/store';
+import startServer from './src/server';
 
 /**
  * Initialize store with empty Map()
  * @type {[type]}
  */
-export const store = makeStore();
+export const store = makeStore()
+/**
+ * Starts server
+ */
+startServer()
