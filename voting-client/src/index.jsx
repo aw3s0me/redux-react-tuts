@@ -14,6 +14,6 @@ const pair = ['Trainspotting', '28 Days Later']
  * @type {Object}
  */
 ReactDOM.render(
-    <Voting pair={pair} />,
+    <Voting pair={pair} winner="Trainspotting"/>,
     document.getElementById('app')
 )
