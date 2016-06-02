@@ -1,6 +1,7 @@
 import React from 'react';
 import Winner from './Winner';
 import Vote from './Vote';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 /**
  * Voting process.
