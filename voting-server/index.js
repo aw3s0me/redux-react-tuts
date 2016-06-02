@@ -13,6 +13,7 @@ import startServer from './src/server';
  */
 export const store = makeStore()
 /**
- * Starts server
+ * Starts server. and send as parameter store
+ * for redux subscription
  */
-startServer()
+startServer(store)
